@@ -17,7 +17,7 @@ def menu():
         elif number == 3:
             block_encryption()
         elif number == 4:
-            exit()
+            raise SystemExit(0)
         else:
             print('That was not an option!')
 
@@ -191,4 +191,5 @@ def block_encryption():
         cipher_text_file.close()
 
 
-menu()
+if __name__ == "__main__":
+    menu()
