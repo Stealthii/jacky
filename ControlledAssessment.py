@@ -2,12 +2,12 @@
 import random
 
 def menu():
-    print('Welcome to Menu!')
-    print('If you want to encrypt your file, select 1 \n')
-    print('If you want to decrypt your file, select 2 \n')
-    print('If you want to see the encrypted message, select 3 \n')
-    print('If you want to exit this program, select 4 \n')
-    number = int(input('Please select your number now: '))
+    print('Welcome to the menu!')
+    print('To encrypt your file, select 1 \n')
+    print('To decrypt your file, select 2 \n')
+    print('To see the encrypted message, select 3 \n')
+    print('To exit this program, select 4 \n')
+    number = int(input('Please input a selection: '))
     if number == 1:
         encryption()
     if number == 2:
@@ -19,29 +19,29 @@ def menu():
     if number>4:
         print('That was not an option!')
         menu()
-  
+
 
 def encryption():
             sumofvalues = offsetz()
             phrase = loadFile()
             offset = offset_factor(sumofvalues)
-            print('>> Text being encrypted is:',phrase)                   
+            print('>> Text being encrypted is:',phrase)
             print('>> The sum of the generated encryption key values is:',sumofvalues)
             ciphertext = encrypt(phrase,offset)
-            newfilename = input('\nNew file name: ')
+            newfilename = input('\nNew filename: ')
             newfile = open(newfilename, 'a')
             newfile.write(ciphertext)
             menu()
-            
+
 def loadFile():
-    print('Please select a text file to encrypt...')
+    print('A file must be chosen for encryption...')
     try:
-        fileName = input('Enter File Name: ') 
-        txtFile = open(fileName,'r') 
+        fileName = input('Enter filename: ')
+        txtFile = open(fileName,'r')
         phrase = txtFile.read()
         txtFile.close
         return phrase
-    except IOError:         
+    except IOError:
         print('File does not exist!')
         menu()
 
@@ -125,7 +125,7 @@ def save_file():
         finally:
             myfile.close()
     except TypeError:
-        print('file name error!')
+        print('filename error!')
         menu()
     return aFile
 
@@ -177,7 +177,7 @@ def block_encryption():
         ciphertext = ciphertext + let
     print ('Block-encrypted Text: ',ciphertext,'\n')
     try:
-        input_name = input('Save as file name(.txt): ')
+        input_name = input('Save as filename(.txt): ')
         cipher_text_file = open(input_name,'w')
         cipher_text_file.write(ciphertext)
         print ('The message you encrypted has been saved to ',input_name)
