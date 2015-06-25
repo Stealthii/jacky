@@ -40,7 +40,7 @@ def loadFile():
         fileName = input('Enter filename: ')
         txtFile = open(fileName,'r')
         phrase = txtFile.read()
-        txtFile.close
+        txtFile.close()
         return phrase
     except IOError:
         print('File does not exist!')
