@@ -1,24 +1,25 @@
 #Tasks 1-4
 import random
 
+
 def menu():
-    print('Welcome to the menu!')
-    print('To encrypt your file, select 1 \n')
-    print('To decrypt your file, select 2 \n')
-    print('To see the encrypted message, select 3 \n')
-    print('To exit this program, select 4 \n')
-    number = int(input('Please input a selection: '))
-    if number == 1:
-        encryption()
-    if number == 2:
-        decryption()
-    if number == 3:
-        block_encryption()
-    if number == 4:
-        exit()
-    if number > 4:
-        print('That was not an option!')
-        menu()
+    while True:
+        print('Welcome to the menu!')
+        print('To encrypt your file, select 1 \n')
+        print('To decrypt your file, select 2 \n')
+        print('To see the encrypted message, select 3 \n')
+        print('To exit this program, select 4 \n')
+        number = input('Please input a selection: ')
+        if number == 1:
+            encryption()
+        elif number == 2:
+            decryption()
+        elif number == 3:
+            block_encryption()
+        elif number == 4:
+            exit()
+        else:
+            print('That was not an option!')
 
 
 def encryption():
@@ -31,7 +32,6 @@ def encryption():
     newfilename = input('\nNew filename: ')
     newfile = open(newfilename, 'a')
     newfile.write(ciphertext)
-    menu()
 
 
 def loadFile():
@@ -44,7 +44,6 @@ def loadFile():
         return phrase
     except IOError:
         print('File does not exist!')
-        menu()
 
 
 def encrypt(phrase, offset):
@@ -131,7 +130,7 @@ def save_file():
             myfile.close()
     except TypeError:
         print('filename error!')
-        menu()
+        return
     return aFile
 
 
@@ -153,7 +152,6 @@ def decryption():
                 ascii_val = ascii_val + 94
             letter = chr(ascii_val)
             print('', displayChar, end='')
-    menu()
 
 
 def block_encryption():
@@ -191,5 +189,6 @@ def block_encryption():
         print ('\n')
     finally:
         cipher_text_file.close()
-    menu()
+
+
 menu()
