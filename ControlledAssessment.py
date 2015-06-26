@@ -25,7 +25,7 @@ def menu():
 def encryption():
     sumofvalues = offsetz()
     phrase = loadFile()
-    offset = offset_factor(sumofvalues)
+    offset = get_offset_factor(sumofvalues)
     print('>> Text being encrypted is:', phrase)
     print('>> The sum of the generated encryption key values is:', sumofvalues)
     ciphertext = encrypt(phrase, offset)
@@ -94,7 +94,7 @@ def generating_key():
 
 #Tasks 4-8
 
-def offset_factor(values):
+def get_offset_factor(values):
     offset_factor = values
     offset_factor = offset_factor / 8
     offset_factor = int(offset_factor)
