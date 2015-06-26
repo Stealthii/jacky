@@ -4,19 +4,19 @@ import random
 
 def menu():
     while True:
-        print('Welcome to the menu!')
-        print('To encrypt your file, select 1 \n')
-        print('To decrypt your file, select 2 \n')
-        print('To see the encrypted message, select 3 \n')
-        print('To exit this program, select 4 \n')
+        print('Welcome to the encryption program!\n')
+        print('To encrypt your file, input 1')
+        print('To decrypt your file, input 2')
+        print('To see the encrypted message, input 3')
+        print('To exit this program, input 4')
         number = input('Please input a selection: ')
-        if number == 1:
+        if number == '1':
             encryption()
-        elif number == 2:
+        elif number == '2':
             decryption()
-        elif number == 3:
+        elif number == '3':
             block_encryption()
-        elif number == 4:
+        elif number == '4':
             raise SystemExit(0)
         else:
             print('That was not an option!')
