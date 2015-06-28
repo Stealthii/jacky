@@ -24,6 +24,7 @@ def menu():
 
 def encryption():
     sumofvalues = offsetz()
+    print("Please choose a file for encryption.")
     try:
         phrase = loadFile()
     except IOError:
@@ -36,6 +37,31 @@ def encryption():
     newfilename = input('\nNew filename: ')
     newfile = open(newfilename, 'a')
     newfile.write(ciphertext)
+
+
+def decryption():
+    print("Please choose a file for decryption.")
+    try:
+        encrypted_file = loadFile()
+    except IOError:
+        print("We couldn't open the file!")
+        return
+    encryption_key = input('Please enter the eight character key that was used to encrypt the message: \n')
+    sumVal = 0
+    for letter in encryption_key:
+        val = ord(letter)
+        sumVal = sumVal + val
+    offset = get_offset_factor(sumVal)
+    for displayChar in encrypted_file:
+        if displayChar == 32:
+            print(' ')
+        else:
+            ASCII_message = ord(displayChar)
+            ascii_val = ASCII_message - offset
+            if ascii_val < 133:
+                ascii_val = ascii_val + 94
+            letter = chr(ascii_val)
+            print('', letter, end='')
 
 
 def loadFile():
@@ -133,26 +159,6 @@ def save_file():
         print('filename error!')
         return
     return aFile
-
-
-def decryption():
-    sumVal = 0
-    file = loadFile()
-    encryption_key = input('Please enter the eight character key that was used to encrypt the message: \n')
-    for letter in encryption_key:
-        val = ord(letter)
-        sumVal = sumVal + val
-    offset = offset_factor(sumVal)
-    for displayChar in file:
-        if displayChar == 32:
-            print(' ')
-        else:
-            ASCII_message = ord(displayChar)
-            ascii_val = ASCII_message - offset
-            if ascii_val < 133:
-                ascii_val = ascii_val + 94
-            letter = chr(ascii_val)
-            print('', displayChar, end='')
 
 
 def block_encryption():
