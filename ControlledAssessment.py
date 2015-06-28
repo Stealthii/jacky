@@ -24,7 +24,11 @@ def menu():
 
 def encryption():
     sumofvalues = offsetz()
-    phrase = loadFile()
+    try:
+        phrase = loadFile()
+    except IOError:
+        print("We couldn't open a file!")
+        return
     offset = get_offset_factor(sumofvalues)
     print('>> Text being encrypted is:', phrase)
     print('>> The sum of the generated encryption key values is:', sumofvalues)
@@ -35,7 +39,6 @@ def encryption():
 
 
 def loadFile():
-    print('A file must be chosen for encryption...')
     try:
         fileName = input('Enter filename: ')
         txtFile = open(fileName,'r')
@@ -44,6 +47,7 @@ def loadFile():
         return phrase
     except IOError:
         print('File does not exist!')
+        raise
 
 
 def encrypt(phrase, offset):
@@ -74,13 +78,10 @@ def offsetz():
         ascii_number = ascii_number + random_integer
         new_letter = chr(random_integer)
         print('', new_letter, end='')
-    ascii_number = ascii_number / 8
-    ascii_number = int(ascii_number)
-    ascii_number = ascii_number - 32
-    offset_factor = ascii_number
+    ascii_number = int((ascii_number / 8) - 32)
     print('\n')
     print('Offset Factor = ', ascii_number)
-    return offset_factor
+    return ascii_number
 
 
 def generating_key():
