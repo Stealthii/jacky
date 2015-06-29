@@ -19,7 +19,7 @@ def menu():
         elif number == '2':
             decryption()
         elif number == '3':
-            pass  # To do Task 10
+            encryption(extended=True)
         elif number == '4':
             raise SystemExit(0)
         else:
@@ -28,7 +28,7 @@ def menu():
 
 # Task 2
 
-def encryption():
+def encryption(extended=False):
     """Encrypt a phrase and save to file"""
 
     print("Please choose a file for encryption.")
@@ -38,6 +38,13 @@ def encryption():
     except IOError:
         print("We couldn't open a file!")
         return
+
+    # Check if we're doing extended encryption
+    if extended:
+        # Remove all spaces
+        phrase = phrase.replace(" ", "")
+        # Add a space every 5 characters
+        phrase = ' '.join(phrase[i:i+5] for i in range(0, len(phrase), 5))
 
     key = generate_key()
     offset = get_offset_factor(key)
