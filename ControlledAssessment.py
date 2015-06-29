@@ -52,16 +52,20 @@ def decryption():
         val = ord(letter)
         sumVal = sumVal + val
     offset = get_offset_factor(sumVal)
+    decryptedtext = []
     for displayChar in encrypted_file:
         if displayChar == 32:
             print(' ')
         else:
             ASCII_message = ord(displayChar)
             ascii_val = ASCII_message - offset
-            if ascii_val < 133:
+            if ascii_val < 33:
                 ascii_val = ascii_val + 94
             letter = chr(ascii_val)
-            print('', letter, end='')
+            decryptedtext.append(letter)
+            #print('', letter, end='')
+    decryptedtext = ''.join(decryptedtext)
+    print(decryptedtext)
 
 
 def loadFile():
@@ -85,15 +89,10 @@ def encrypt(phrase, offset):
             ascii_code = ascii_code + offset
             if ascii_code > 126:
                 ascii_code = ascii_code - 94
-            else:
-                ascii_code = ascii_code
-        else:
-            ascii_code = ascii_code
         new_letter_2 = chr(ascii_code)
-        print('', new_letter_2, end='')
         ciphertext.append(new_letter_2)
-    ciphertext = ciphertext
     ciphertext = ''.join(ciphertext)
+    print(ciphertext)
     return ciphertext
 
 
@@ -128,9 +127,9 @@ def get_offset_factor(values):
     offset_factor = offset_factor - 32
     print('This is your offset factor for your eight character key:', offset_factor)
     return offset_factor
-    ACSCII_char()
+    #ACSCII_char()
 
-
+"""
 def ACSCII_char():
     if displayChar == 32:
         print(' ')
@@ -145,8 +144,9 @@ def ACSCII_char():
     return ascii_val
     return ASCII_message
     save_file()
+"""
 
-
+"""
 def save_file():
     try:
         aFile = input('Save as File Name:      \n')
@@ -159,43 +159,8 @@ def save_file():
         print('filename error!')
         return
     return aFile
+"""
 
-
-def block_encryption():
-    number = 0
-    text = decryption()
-    offset_factor = offset_and_key3()
-    length = len(text)
-    cipher_text = ''
-    for x in range(length):
-        letter = (text[number])
-        asciiv = ord(letter)
-        final_ascii = asciiv + offset_factor
-        if final_ascii > 126:
-            final_ascii = final_ascii - 94
-        final_letter = chr(final_ascii)
-        number = number + 1
-        if letter != ' ':
-            cipher_text = cipher_text + final_letter
-    length2 = int(len(cipher_text) / 5)
-    ciphertext = ''
-    num = 0
-    for x in range(length2):
-        for x in range(5):
-            let = (cipher_text[num])
-            ciphertext = ciphertext + let
-            num = num + 1
-        let = ' '
-        ciphertext = ciphertext + let
-    print ('Block-encrypted Text: ', ciphertext, '\n')
-    try:
-        input_name = input('Save as filename(.txt): ')
-        cipher_text_file = open(input_name, 'w')
-        cipher_text_file.write(ciphertext)
-        print ('The message you encrypted has been saved to ', input_name)
-        print ('\n')
-    finally:
-        cipher_text_file.close()
 
 
 if __name__ == "__main__":
