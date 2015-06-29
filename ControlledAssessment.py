@@ -10,7 +10,7 @@ def menu():
         print('Welcome to the encryption program!\n')
         print('To encrypt your file, input 1')
         print('To decrypt your file, input 2')
-        print('To see the encrypted message, input 3')
+        print('To do extended encryption, input 3')
         print('To exit this program, input 4')
 
         number = input('Please input a selection: ')
@@ -19,7 +19,7 @@ def menu():
         elif number == '2':
             decryption()
         elif number == '3':
-            pass  # TODO
+            pass  # To do Task 10
         elif number == '4':
             raise SystemExit(0)
         else:
@@ -39,7 +39,8 @@ def encryption():
         print("We couldn't open a file!")
         return
 
-    key, offset = generate_key()
+    key = generate_key()
+    offset = get_offset_factor(key)
     ciphertext = encrypt(phrase, offset)
 
     print("Your encryption key is:", key)
@@ -51,10 +52,11 @@ def encryption():
     savefile(ciphertext, newfilename)
 
 
-# Task 7
+# Task 7 & 9
 
 def decryption():
     """Decrypt a phrase and print it"""
+
     print("Please choose a file for decryption.")
     filename = input('Enter filename: ')
     try:
@@ -62,29 +64,15 @@ def decryption():
     except IOError:
         print("We couldn't open the file!")
         return
-    encryption_key = input('Please enter the eight character key that was used to encrypt the message: \n')
-    if len(encryption_key) is not 8:
+
+    key = input('Enter the eight character encryption key: ')
+    if len(key) is not 8:
         print("Not a valid key!")
         return
-    sumVal = 0
-    for letter in encryption_key:
-        val = ord(letter)
-        sumVal = sumVal + val
-    offset = get_offset_factor(sumVal)
-    decryptedtext = []
-    for displayChar in ciphertext:
-        if displayChar == 32:
-            print('bork')
-        else:
-            ASCII_message = ord(displayChar)
-            ascii_val = ASCII_message - offset
-            if ascii_val < 32:
-                ascii_val = ascii_val + 94
-            letter = chr(ascii_val)
-            decryptedtext.append(letter)
-            # print('', letter, end='')
-    decryptedtext = ''.join(decryptedtext)
-    print(decryptedtext)
+    offset = get_offset_factor(key)
+    phrase = decrypt(ciphertext, offset)
+
+    print("The decrypted phrase is:", phrase)  # Task 9
 
 
 def loadfile(filename):
@@ -126,48 +114,45 @@ def encrypt(phrase, offset):
 
 def decrypt(ciphertext, offset):
     """Returns a decrypted phrase"""
+    phrase = []
+    for letter in ciphertext:
+        ascii_code = ord(letter)
+        # Do not decrypt spaces
+        if ascii_code == 32:
+            pass
+        else:
+            ascii_code = ascii_code - offset
+            # Add 94 to make character a valid ASCII code
+            if ascii_code < 32:
+                ascii_code = ascii_code + 94
+        new_letter = chr(ascii_code)
+        phrase.append(new_letter)
+    phrase = ''.join(phrase)  # Convert list to string
+    return phrase
 
-# Task 3 & 4
+
+# Task 3
 
 def generate_key():
-    """Generate an 8 character key and offset factor"""
-    ascii_number = 0
+    """Generate an 8 character key"""
     key = []  # List to store key characters
     for _ in range(8):
         random_integer = random.randrange(33, 126)
-        ascii_number = ascii_number + random_integer
         new_letter = chr(random_integer)
         key.append(new_letter)
     key = "".join(key)  # Convert list into string
-    offset_factor = int((ascii_number / 8) - 32)  # Calculate offset factor
-    return key, offset_factor
+    return key
 
 
-# Tasks 4-8
+# Task 4
 
-def get_offset_factor(values):
-    offset_factor = values
-    offset_factor = offset_factor / 8
-    offset_factor = int(offset_factor)
-    offset_factor = offset_factor - 32
-    print('This is your offset factor for your eight character key:', offset_factor)
+def get_offset_factor(key):
+    """Calculate the offset factor for a key"""
+    total = 0
+    for letter in key:
+        total += ord(letter)
+    offset_factor = int((total / 8) - 32)  # Calculate offset factor
     return offset_factor
-    # ACSCII_char()
-
-"""
-def save_file():
-    try:
-        aFile = input('Save as File Name:      \n')
-        myfile = open(aFile,'r+w')
-        try:
-            myfile.write('The plaintext letter', displayChar, 'converts to the ASCII code', ASCII_message, 'add the offset factor', offset_factor, ' to get the result', ascii_val)
-        finally:
-            myfile.close()
-    except TypeError:
-        print('filename error!')
-        return
-    return aFile
-"""
 
 
 if __name__ == "__main__":
